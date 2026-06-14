@@ -4,14 +4,24 @@ version = "0.1.0"
 description = "Personal blog built with Django"
 requires-python = ">=3.12"
 dependencies = [
-    "dj-database-url>=3.1.2",
+    # Django core 
     "django>=6.0.6",
     "django-extensions>=4.1",
+    "django-storages>=1.14.6",
+    # Database
+    "boto3>=1.43.29",
+    "dj-database-url>=3.1.2",
+    "easy-thumbnails>=2.10.1",
+    "pillow>=12.2.0",
+    "psycopg[binary]>=3.3.4",
+    # Utils 
     "ipython>=9.14.1",
     "python-decouple>=3.8",
-    "psycopg[binary]>=3.3.4",
+    # Server
+    "gunicorn>=26.0.0",
+    "whitenoise>=6.12.0",
 ]
-
+  
 [project.optional-dependencies]
 dev = [
     "django-debug-toolbar>=6.3.0",
