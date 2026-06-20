@@ -27,7 +27,7 @@ ALLOWED_HOSTS = [h.strip() for h in config("ALLOWED_HOSTS", default="").split(",
 # Application definition
 INSTALLED_APPS = [
     # custom accounts
-    "accounts",
+    "accounts.apps.AccountsConfig",
     # default apps
     "django.contrib.admin",
     "django.contrib.auth",
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # custom apps
+    "core.apps.CoreConfig",
 ]
 
 if "test" in sys.argv:
