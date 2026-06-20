@@ -115,7 +115,7 @@ class RegistrationToken(models.Model):
             try:
                 with transaction.atomic():
                     rotate_token = cls.objects.select_for_update().get(
-                        email__iexcat=email, user_created_at__isnull=True
+                        email__iexact=email, user_created_at__isnull=True
                     )
                     if rotate_token.is_expired:
                         rotate_token.expires_at = set_expires_at
@@ -123,31 +123,55 @@ class RegistrationToken(models.Model):
                         rotate_token.save(update_fields=["expires_at", "token", "updated"])
                         logger.info(
                             "%s.rotate_or_create - Expired RegistrationToken updated for email=%s.",
-                            cls.__class__.__name__,
+                            cls.__class__,
                             email,
                         )
                         return rotate_token, False
                     logger.info(
                         "%s.rotate_or_create - RegistrationToken retrieved for email=%s.",
-                        cls.__class__.__name__,
+                        cls.__class__,
                         email,
                     )
                     return rotate_token, False
             except cls.DoesNotExist:
                 logger.exception(
                     "%s.rotate_or_create - Creation or rotation failed for email=%s.",
-                    cls.__class__.__name__,
+                    cls.__class__,
                     email,
                 )
                 raise
+
+    def mark_email_verified(self, *, commit: bool = True):
+
+        now = timezone.now()
+
+        errors: dict[str, str] = {}
+
+        if self.email_verified:
+            errors["verified_at"] = "Email already verified."
+        if self.is_used:
+            errors["user_created_at"] = "UserModel already created."
+        if self.is_expired:
+            errors["expires_at"] = "Imposible to verify when RegistrationToken is expired."
+
+        if errors:
+            raise ValidationError(errors)
+
+        self.verified_at = now
+        if commit:
+            self.save(update_fields=["verified_at", "updated"])
+            logger.info(
+                "%s.mark_email_verified - RegistrationToken.verified_at modified.",
+                self.__class__.__name__,
+            )
 
     def mark_user_created_at(self, *, commit: bool = True):
 
         now = timezone.now()
 
         errors: dict[str, str] = {}
-        if self.user_created_at is not None:
-            return
+        if self.is_used:
+            errors["user_created_at"] = "UserModel already created for this RegistrationToken."
         if not self.email_verified:
             errors["verified_at"] = (
                 "RegistrationToken.verified_at must be set before creating a User."
@@ -158,3 +182,7 @@ class RegistrationToken(models.Model):
         self.user_created_at = now
         if commit:
             self.save(update_fields=["user_created_at", "updated"], clean=False)
+            logger.info(
+                "%s.mark_email_verified - RegistrationToken.user_created_at modified.",
+                self.__class__.__name__,
+            )

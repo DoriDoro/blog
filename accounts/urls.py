@@ -15,7 +15,7 @@ registration_patterns = [
     ),
     path(
         "email-verification/<uuid:token>/",
-        views.UserRegisterRequestView.as_view(),
+        views.UserVerifyEmailView.as_view(),
         name="registration_verify_email",
     ),
 ]
@@ -23,7 +23,7 @@ registration_patterns = [
 # accounts/user/...
 # accounts:user
 user_patterns = [
-    path("create/", views.UserRegisterRequestView.as_view(), name="user_create"),
+    path("create/<uuid:token>/", views.UserCreateView.as_view(), name="user_create"),
 ]
 
 # accounts/...
