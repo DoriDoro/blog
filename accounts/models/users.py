@@ -27,7 +27,13 @@ class CustomUser(AbstractUser):
                 name="uq_user_lower_email",
                 violation_error_code="unique_email",
                 violation_error_message="User with this email address exists already.",
-            )
+            ),
+            models.UniqueConstraint(
+                Lower("username"),
+                name="uq_user_lower_username",
+                violation_error_code="unique_username",
+                violation_error_message="This 'username' is already taken.",
+            ),
         ]
 
     def __str__(self):
@@ -36,6 +42,8 @@ class CustomUser(AbstractUser):
     def _normalize_fields(self):
         if self.email:
             self.email = self.email.strip().lower()
+        if self.username:
+            self.username = self.username.strip()
 
     def save(self, *args, **kwargs):
         self._normalize_fields()
