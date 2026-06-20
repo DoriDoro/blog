@@ -1,0 +1,8 @@
+{% for message in messages %}
+  <div class="alert {{ message.tags }}" role="alert">
+    <span class="alert-text">{{ message }}</span>
+    <button class="alert-close"
+            onclick="this.closest('.alert').remove();"
+            aria-label="Dismiss message">&times;</button>
+  </div>
+{% endfor %}

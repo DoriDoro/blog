@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#01395e">
+  <title>{% block title %}{{ platform_name|default:"My Life in Words" }}{% endblock %}</title>
+  <style>
+    /* ─── Palette ─── */
+    :root {
+      --navy:       #01395e;
+      --navy-dark:  #012d4a;
+      --blue:       #0091cf;
+      --blue-hover: #007ab0;
+      --amber:      #ffaf00;
+      --red:        #fd4445;
+      --white:      #ffffff;
+      --body-bg:    #f0f4f8;
+      --text:       #2c3e50;
+      --text-muted: #6c7a8d;
+      --border:     #d8e4ed;
+    }
+
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--body-bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; }
+
+    /* ─── Navbar ─── */
+    .navbar {
+      background-color: var(--navy);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    .navbar-brand {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--blue);
+      text-decoration: none;
+      padding: 20px 0;
+    }
+    .navbar-brand:hover { color: var(--white); text-decoration: none; }
+    .navbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+    .navbar-nav a {
+      display: block;
+      color: #a0bdd0;
+      font-size: 13px;
+      padding: 8px 14px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.15s, color 0.15s;
+    }
+    .navbar-nav a:hover {
+      background-color: rgba(0, 145, 207, 0.15);
+      color: var(--white);
+      text-decoration: none;
+    }
+    .navbar-nav .btn-primary {
+      background-color: var(--blue);
+      color: var(--white);
+      font-weight: 700;
+    }
+    .navbar-nav .btn-primary:hover {
+      background-color: var(--blue-hover);
+      color: var(--white);
+    }
+
+    /* ─── Accent stripes ─── */
+    .stripe-blue  { height: 4px; background-color: var(--blue); }
+    .stripe-amber { height: 3px; background-color: var(--amber); }
+
+    /* ─── Messages ─── */
+    .messages-wrapper {
+      max-width: 1100px;
+      margin: 20px auto 0;
+      padding: 0 32px;
+    }
+    .alert {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 10px;
+      font-size: 14px;
+      border-left: 4px solid;
+    }
+    .alert-text { flex: 1; }
+    .alert-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      padding: 0 2px;
+      opacity: 0.6;
+      color: inherit;
+      flex-shrink: 0;
+    }
+    .alert-close:hover { opacity: 1; }
+
+    /* Message type colours */
+    .alert-info     { background-color: #e8f4fb; border-color: var(--blue);  color: #01395e; }
+    .alert-success  { background-color: #e8f5ee; border-color: #28a745;      color: #145a28; }
+    .alert-warning  { background-color: #fff8e6; border-color: var(--amber); color: #7a5800; }
+    .alert-danger   { background-color: #fce8e8; border-color: var(--red);   color: #7a1010; }
+    .alert-secondary{ background-color: #edf2f7; border-color: #8a9ab5;      color: #3d4a5c; }
+
+    /* ─── Main content ─── */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 32px;
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      background-color: var(--navy-dark);
+      color: #7a9bb0;
+      text-align: center;
+      padding: 20px 32px;
+      font-size: 12px;
+    }
+    footer a { color: var(--blue); }
+    footer a:hover { text-decoration: underline; }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 640px) {
+      .navbar { padding: 0 16px; }
+      .navbar-nav a { padding: 6px 10px; }
+      main { padding: 24px 16px; }
+      .messages-wrapper { padding: 0 16px; }
+    }
+  </style>
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <a href="/" class="navbar-brand">{{ platform_name|default:"My Life in Words" }}</a>
+    <ul class="navbar-nav">
+      {% block nav_links %}
+        {% if user.is_authenticated %}
+          <li><a href="#">My Blog</a></li>
+          <li><a href="#">Profile</a></li>
+          <li><a href="/accounts/logout/">Log out</a></li>
+        {% else %}
+          <li><a href="{% url 'accounts:login' %}">Log in</a></li>
+          <li>
+            <a href="{% url 'accounts:registration:registration_start_process' %}"
+               class="btn-primary">Sign up</a>
+          </li>
+        {% endif %}
+      {% endblock %}
+    </ul>
+  </nav>
+  <div class="stripe-blue"></div>
+
+  <!-- Flash messages -->
+  {% if messages %}
+    <div class="messages-wrapper">
+      {% include 'messages.html' %}
+    </div>
+  {% endif %}
+
+  <!-- Page content -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <div class="stripe-amber"></div>
+  <footer>
+    <p>
+      &copy; {% now "Y" %} {{ platform_name|default:"My Life in Words" }}.
+      All rights reserved.
+    </p>
+  </footer>
+
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

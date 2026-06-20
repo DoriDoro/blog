@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#01395e">
+  <title>Server Error</title>
+  <style>
+    :root {
+      --navy:      #01395e;
+      --navy-dark: #012d4a;
+      --blue:      #0091cf;
+      --amber:     #ffaf00;
+      --red:       #fd4445;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #01395e;
+      color: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ─── Card ─── */
+    .card {
+      background-color: #012d4a;
+      border-radius: 10px;
+      max-width: 520px;
+      width: 90%;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+    .card-top-stripe { height: 5px; background-color: #0091cf; }
+    .card-body { padding: 48px 40px; text-align: center; }
+    .card-bottom-stripe { height: 3px; background-color: #ffaf00; }
+
+    /* ─── Content ─── */
+    .error-code {
+      font-size: 80px;
+      font-weight: 700;
+      color: #0a4e78;
+      line-height: 1;
+      letter-spacing: -3px;
+      margin-bottom: 6px;
+    }
+    .error-code span { color: #0091cf; }
+    .error-divider {
+      width: 50px;
+      height: 4px;
+      background-color: #ffaf00;
+      border-radius: 2px;
+      margin: 0 auto 20px;
+    }
+    .error-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+    .error-description {
+      font-size: 14px;
+      color: #7a9bb0;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    .btn {
+      display: inline-block;
+      background-color: #0091cf;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 28px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .btn:hover { background-color: #007ab0; }
+
+    /* ─── Footer ─── */
+    .page-footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: #4a6e82;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="card-top-stripe"></div>
+    <div class="card-body">
+      <p class="error-code">5<span>0</span>0</p>
+      <div class="error-divider"></div>
+      <h1 class="error-title">Something went wrong</h1>
+      <p class="error-description">
+        Our server encountered an unexpected error and could not complete your request.
+        The team has been notified. Please try again in a few moments.
+      </p>
+      <a href="/" class="btn">Back to homepage</a>
+    </div>
+    <div class="card-bottom-stripe"></div>
+  </div>
+
+  <p class="page-footer">My Life in Words</p>
+
+</body>
+</html>

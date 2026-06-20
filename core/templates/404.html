@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Page Not Found — {{ platform_name|default:"My Life in Words" }}{% endblock %}
+
+{% block content %}
+<style>
+  .error-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px;
+  }
+  .error-code {
+    font-size: 96px;
+    font-weight: 700;
+    color: #d8e4ed;
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -4px;
+  }
+  .error-code span { color: #0091cf; }
+  .error-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #01395e;
+    margin-bottom: 12px;
+  }
+  .error-description {
+    font-size: 15px;
+    color: #6c7a8d;
+    max-width: 480px;
+    margin-bottom: 36px;
+    line-height: 1.7;
+  }
+  .error-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .btn {
+    display: inline-block;
+    padding: 11px 28px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.15s, color 0.15s;
+  }
+  .btn-blue {
+    background-color: #0091cf;
+    color: #ffffff;
+  }
+  .btn-blue:hover { background-color: #007ab0; color: #ffffff; text-decoration: none; }
+  .btn-outline {
+    border: 2px solid #d8e4ed;
+    color: #3d4a5c;
+  }
+  .btn-outline:hover {
+    border-color: #0091cf;
+    color: #0091cf;
+    text-decoration: none;
+  }
+  .error-divider {
+    width: 60px;
+    height: 4px;
+    background-color: #ffaf00;
+    border-radius: 2px;
+    margin: 0 auto 28px;
+  }
+</style>
+
+<div class="error-page">
+  <p class="error-code">4<span>0</span>4</p>
+  <div class="error-divider"></div>
+  <h1 class="error-title">Page not found</h1>
+  <p class="error-description">
+    The page you are looking for may have been moved, deleted,
+    or never existed. Double-check the URL and try again.
+  </p>
+  <div class="error-actions">
+    <a href="/" class="btn btn-blue">Go to homepage</a>
+    <a href="javascript:history.back();" class="btn btn-outline">Go back</a>
+  </div>
+</div>
+{% endblock %}
