@@ -51,15 +51,15 @@ class UserCreateView(CreateView):
                 "accounts:registration:registration_verify_email",
                 kwargs={"token": self.registration_token.token},
             )
-            built_email_verify_url = self.request.build_absolute_uri(build_email_verify_path)
+            build_email_verify_url = self.request.build_absolute_uri(build_email_verify_path)
             logger.info(
-                "%s.form_valid - Built email_verify_url=%s.",
+                "%s.form_valid - Build email_verify_url=%s.",
                 self.__class__.__name__,
-                built_email_verify_url,
+                build_email_verify_url,
             )
             on_commit_send_verify_email(
                 expire_days=DEFAULT_EXPIRATION_DAYS,
-                email_verify_url=built_email_verify_url,
+                email_verify_url=build_email_verify_url,
                 to_email=self.registration_token.email,
             )
             logger.info(

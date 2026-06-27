@@ -35,7 +35,7 @@ class UserRegisterRequestView(FormView):
         )
         built_email_verify_url = self.request.build_absolute_uri(build_email_verify_path)
         logger.info(
-            "%s.form_valid - Built email_verify_url=%s.",
+            "%s.form_valid - Build email_verify_url=%s.",
             self.__class__.__name__,
             built_email_verify_url,
         )

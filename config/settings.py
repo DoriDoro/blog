@@ -169,7 +169,7 @@ THUMBNAIL_ALIASES = {
 AUTH_USER_MODEL = "accounts.CustomUser"
 
 # Login configuration
-LOGIN_REDIRECT_URL = ""
+LOGIN_REDIRECT_URL = "core:home_page"
 LOGIN_URL = "accounts:login"
 LOGOUT_URL = "accounts:logout"
 

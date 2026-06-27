@@ -12,6 +12,7 @@ urlpatterns = [
     # Django Application URLs
     # ------------------------
     path("accounts/", include("accounts.urls", namespace="accounts")),
+    path("", include("core.urls", namespace="core")),
 ]
 
 if settings.DEBUG:
